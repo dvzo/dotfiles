@@ -189,3 +189,7 @@ bar {
 	position top
         status_command i3status
 }
+
+# run picom on startup
+# used for transparent window styling
+exec picom
