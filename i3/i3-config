@@ -187,5 +187,18 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
 	position top
-        status_command i3status
+        status_command i3status --config ~/.config/i3/i3status.conf
 }
+
+# run picom on startup
+# used for transparent window styling
+# exec picom
+
+# run polybar
+# used for customizing status bar
+# exec polybar
+# exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
+
+# run nitrogen
+# run wallpaper program
+exec_always nitrogen --restore
