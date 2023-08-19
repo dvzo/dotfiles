@@ -1,15 +1,22 @@
-(defwidget bar []
-  (centerbox :orientation "h"
-    (workspaces)
-  )
+;; variables
+(defvar eww "eww -c $HOME/.config/eww/")
+
+;; polls
+(defpoll datetime :interval "1s" "scripts/datetime_info")
+(defpoll volume :interval "1s" "scripts/getvol")
+
+;; listen
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
 )
 
-(defwidget greeter [?text name]
-	(box :orientation "horizontal"
-		:halign "center"
-		text
-		(button :onclick "notify-send 'Hello' 'Hello, ${name}'" "Greet")
-	)
+(defwidget bar[]
+  (box 
+    :spacing 0
+    (workspaces)
+    (music)
+    (datetime)
+  )
 )
 
 (defwidget workspaces []
@@ -26,10 +33,36 @@
     (button :onclick "wmctrl -s 5" 6)
     (button :onclick "wmctrl -s 6" 7)
     (button :onclick "wmctrl -s 7" 8)
-    (button :onclick "wmctrl -s 8" 9))
+    (button :onclick "wmctrl -s 8" 9)
+  )
 )
 
-(defwindow bar
+(defwidget music []
+  (box :class "music"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    {music != "" ? "🎵${music}" : ""}
+  )
+)
+
+(defwidget datetime []
+  (eventbox
+    :tooltip "current time"
+    :cursor "pointer"
+    (button
+      (box
+        :space-evenly false
+        :orientation "h"
+        (label
+          :markup "<span>${datetime}</span>"
+        )
+      )
+    )
+  )
+)
+
+(defwindow main
 	:monitor 0
 	:geometry (geometry :x "0%"
 			:y "20px"
