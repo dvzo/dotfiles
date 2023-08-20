@@ -1,3 +1,9 @@
+;; notes
+;; $ sensors -> CPU temps
+;; $ brightnessctl -> brightness
+;; $ df -H -> storage
+;; 
+
 ;; variables
 (defvar eww "eww -c $HOME/.config/eww/")
 
@@ -6,55 +12,107 @@
 (defpoll volume :interval "1s" "scripts/getvol")
 
 ;; listen
-(deflisten music :initial ""
+(deflisten music 
+  :initial ""
   "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
 )
 
 (defwidget bar[]
   (box 
-    :spacing 0
+    :class "bar-box"
+    :hexpand false
     (workspaces)
     (music)
-    (datetime)
+    (right-widgets)
   )
 )
 
 (defwidget workspaces []
   (box :class "workspaces"
-       :orientation "h"
        :space-evenly true
        :halign "start"
        :spacing 10
-    (button :onclick "wmctrl -s 0" 1)
-    (button :onclick "wmctrl -s 1" 2)
-    (button :onclick "wmctrl -s 2" 3)
-    (button :onclick "wmctrl -s 3" 4)
-    (button :onclick "wmctrl -s 4" 5)
-    (button :onclick "wmctrl -s 5" 6)
-    (button :onclick "wmctrl -s 6" 7)
-    (button :onclick "wmctrl -s 7" 8)
-    (button :onclick "wmctrl -s 8" 9)
+    (button :class "workspaces-button" :onclick "wmctrl -s 0" 1)
+    (button :class "workspaces-button" :onclick "wmctrl -s 1" 2)
+    (button :class "workspaces-button" :onclick "wmctrl -s 2" 3)
+    (button :class "workspaces-button" :onclick "wmctrl -s 3" 4)
+    (button :class "workspaces-button" :onclick "wmctrl -s 4" 5)
+    (button :class "workspaces-button" :onclick "wmctrl -s 5" 6)
+    (button :class "workspaces-button" :onclick "wmctrl -s 6" 7)
+    (button :class "workspaces-button" :onclick "wmctrl -s 7" 8)
+    (button :class "workspaces-button" :onclick "wmctrl -s 8" 9)
   )
 )
 
 (defwidget music []
-  (box :class "music"
-    :orientation "h"
-    :space-evenly false
-    :halign "center"
-    {music != "" ? "🎵${music}" : ""}
+  (eventbox
+    :class "music-eventbox"
+    (box 
+      :class "music-box"
+      :halign "center"
+      (label
+        :text {music != "" ? "🎵 ${music}" : ""}
+        :width 200
+        :show-truncated true
+        :limit-width 60
+      )
+    )
+  )
+)
+
+(defwidget right-widgets []
+  (eventbox
+    (box
+      :spacing 10 ;; spacing in between widgets in this space
+      :space-evenly false
+      :halign "end" ;; place widgets at the end of this box
+      (temp)
+      (battery)
+      (datetime)
+    )
+  )
+)
+
+(defwidget temp []
+  (eventbox
+    (box
+      (label
+        :text "${EWW_DISK["/"].used_perc}"
+      )
+    )
+  )
+)
+
+(defwidget battery []
+  (eventbox
+    :class "battery-eventbox"
+    :tooltip "${EWW_BATTERY.BAT1.capacity}% remaining, ${EWW_BATTERY.BAT1.status}"
+    :halign "end" ;; shrinks overall widget
+    (box
+      :width 50;; change width of widget
+      (image
+        :class "battery-percentage-image"
+        :path "images/battery-050.png"
+        :halign "center"
+        :image-width 26
+        :image-height 26
+      )
+    )
   )
 )
 
 (defwidget datetime []
   (eventbox
-    :tooltip "current time"
+    :tooltip "current date/time"
     :cursor "pointer"
+    :halign "end" ;; shrinks overall widget
     (button
+      :class "datetime-button"
       (box
+        :class "datetime-box"
         :space-evenly false
-        :orientation "h"
         (label
+          :class "datetime-label"
           :markup "<span>${datetime}</span>"
         )
       )
@@ -64,11 +122,13 @@
 
 (defwindow main
 	:monitor 0
-	:geometry (geometry :x "0%"
-			:y "20px"
-			:width "90%"
-			:height "30px"
-			:anchor "top center"
+	:geometry (
+      geometry 
+        :x "0%"
+        :y "20px"
+        :width "98%"
+        :height "40px"
+        :anchor "top center"
 	)
 	:stacking "fg"
 	:reserve (struts :distance "40px" :side "top")
