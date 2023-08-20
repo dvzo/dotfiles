@@ -1,0 +1,65 @@
+@import "colors.scss";
+
+/* main bar widget */
+.bar-box {
+  border-radius: 20px;
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.workspaces-button {
+  border-radius: 20px;
+}
+
+/* center modules */
+.music-eventbox {
+  border-style: solid;
+  border-color: green;
+  border-width: 1px;
+}
+
+.music-box {
+  font-family: "Noto Sans Mono";
+  font-size: 18px;
+
+  border-style: solid;
+  border-color: red;
+  border-width: 1px;
+}
+
+/* right modules */
+.battery-eventbox {
+  background-color: $battery-full;
+  border-radius: 20px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+  .battery-percentage-image{
+    margin-top: 3px;
+  }
+
+  .battery-percentage-label {
+    font-size: 20px;
+  }
+
+.datetime-button {
+  /* border: 0 */ /* removes border */
+  border-radius: 20px;
+
+}
+
+.datetime-box {
+/*
+  margin-top: -10px;
+  margin-bottom: -10px;
+*/
+}
+
+.datetime-label {
+  font-family: "Noto Sans Mono";
+  font-size: 20px;
+  margin-bottom: -20px;
+  margin-top: -20px;
+}

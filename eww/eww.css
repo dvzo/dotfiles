@@ -1,0 +1,18 @@
+
+/* right modules */
+.battery-percentage-label {
+  font-size: 20px
+}
+
+.datetime-box {
+/*
+  margin-top: -10px;
+  margin-bottom: -10px;
+*/
+}
+
+.datetime-label {
+  font-size: 20px;
+  margin-bottom: -20px;
+  margin-top: -20px;
+}
