@@ -1,15 +1,11 @@
-;; notes
-;; $ sensors -> CPU temps
-;; $ brightnessctl -> brightness
-;; $ df -H -> storage
-;; 
-
 ;; variables
 (defvar eww "eww -c $HOME/.config/eww/")
+;; (defvar current-workspace "hyprctl activeworkspace")
 
 ;; polls
 (defpoll datetime :interval "1s" "scripts/datetime_info")
 (defpoll volume :interval "1s" "scripts/getvol")
+(defpoll battery-image-path :initial "images/battery-100.png" :interval "2s" "eww state | grep 'EWW_BATTERY' | python scripts/get_battery_image_path.py")
 
 ;; listen
 (deflisten music 
@@ -17,10 +13,15 @@
   "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true"
 )
 
+(deflisten active-workspace
+  :initial "workspace>>1"
+  "scripts/get_active_workspace_class"
+)
+
 (defwidget bar[]
-  (box 
-    :class "bar-box"
-    :hexpand false
+  (box :class "bar-box"
+    :hexpand false 
+    :vexpand false
     (workspaces)
     (music)
     (right-widgets)
@@ -28,27 +29,134 @@
 )
 
 (defwidget workspaces []
-  (box :class "workspaces"
-       :space-evenly true
-       :halign "start"
-       :spacing 10
-    (button :class "workspaces-button" :onclick "wmctrl -s 0" 1)
-    (button :class "workspaces-button" :onclick "wmctrl -s 1" 2)
-    (button :class "workspaces-button" :onclick "wmctrl -s 2" 3)
-    (button :class "workspaces-button" :onclick "wmctrl -s 3" 4)
-    (button :class "workspaces-button" :onclick "wmctrl -s 4" 5)
-    (button :class "workspaces-button" :onclick "wmctrl -s 5" 6)
-    (button :class "workspaces-button" :onclick "wmctrl -s 6" 7)
-    (button :class "workspaces-button" :onclick "wmctrl -s 7" 8)
-    (button :class "workspaces-button" :onclick "wmctrl -s 8" 9)
+  (box :class "workspaces-box"
+    :space-evenly true
+    :halign "start"
+    :spacing 5
+
+    (eventbox
+      :cursor "pointer"
+      ;; (button :class "workspace-button active-workspace-button"
+      (button :class {active-workspace == "workspace>>1" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 1"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>1" ? "images/terminal-solid-dark.png" : "images/terminal-solid-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>2" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 2"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>2" ? "images/firefox-browser-dark.png" : "images/firefox-browser-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>3" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 3"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>3" ? "images/discord-dark.png" : "images/discord-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>4" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 4"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>4" ? "images/spotify-dark.png" : "images/spotify-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>5" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 5"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>5" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>6" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 6"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>6" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>7" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 7"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>7" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>8" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 8"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>8" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
+
+    (eventbox
+      :cursor "pointer"
+      (button :class {active-workspace == "workspace>>9" ? "workspace-button active-workspace-button" : "workspace-button"}
+        :onclick "hyprctl dispatch workspace 9"
+        :width 40 
+        (image
+          :path {active-workspace == "workspace>>9" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :image-width 16
+          :image-height 16
+        )
+      )
+    )
   )
 )
 
 (defwidget music []
-  (eventbox
-    :class "music-eventbox"
-    (box 
-      :class "music-box"
+  (eventbox :class "music-eventbox"
+    (box :class "music-box"
       :halign "center"
       (label
         :text {music != "" ? "🎵 ${music}" : ""}
@@ -84,15 +192,13 @@
 )
 
 (defwidget battery []
-  (eventbox
-    :class "battery-eventbox"
+  (eventbox :class "battery-eventbox"
     :tooltip "${EWW_BATTERY.BAT1.capacity}% remaining, ${EWW_BATTERY.BAT1.status}"
-    :halign "end" ;; shrinks overall widget
+    :halign "center" ;; shrinks overall widget
     (box
-      :width 50;; change width of widget
-      (image
-        :class "battery-percentage-image"
-        :path "images/battery-050.png"
+      :width 40;; change width of widget
+      (image :class "battery-percentage-image"
+        :path "${battery-image-path}"
         :halign "center"
         :image-width 26
         :image-height 26
@@ -106,13 +212,10 @@
     :tooltip "current date/time"
     :cursor "pointer"
     :halign "end" ;; shrinks overall widget
-    (button
-      :class "datetime-button"
-      (box
-        :class "datetime-box"
+    (button :class "datetime-button"
+      (box :class "datetime-box"
         :space-evenly false
-        (label
-          :class "datetime-label"
+        (label :class "datetime-label"
           :markup "<span>${datetime}</span>"
         )
       )
@@ -125,14 +228,13 @@
 	:geometry (
       geometry 
         :x "0%"
-        :y "20px"
-        :width "98%"
+        :y "0px"
+        :width "99%"
         :height "40px"
         :anchor "top center"
 	)
 	:stacking "fg"
 	:reserve (struts :distance "40px" :side "top")
-	:windowtype "dock"
 	:wm-ignore false
 
 	(bar)
