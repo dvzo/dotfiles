@@ -1,16 +1,30 @@
 @import "colors.scss";
 
+* {
+  all: unset; // !important; unsets all defaults
+}
+
 /* main bar widget */
 .bar-box {
   border-radius: 20px;
-  border-color: red;
-  border-width: 1px;
-  border-style: solid;
+  opacity: 0.95;
+  background-color: darkslategray;
 }
 
-.workspaces-button {
+/* workspaces */
+.workspaces-box {
   border-radius: 20px;
 }
+
+  .workspace-button {
+    border-radius: 20px;
+    opacity: 0.5;
+  }
+
+  .active-workspace-button {
+    background: burlywood;
+    opacity: 1;
+  }
 
 /* center modules */
 .music-eventbox {
@@ -47,14 +61,11 @@
 .datetime-button {
   /* border: 0 */ /* removes border */
   border-radius: 20px;
-
 }
 
 .datetime-box {
-/*
-  margin-top: -10px;
-  margin-bottom: -10px;
-*/
+  border-radius: 20px;
+  margin-right: 5px;
 }
 
 .datetime-label {
