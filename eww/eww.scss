@@ -18,33 +18,38 @@
 
   .workspace-button {
     border-radius: 20px;
-    opacity: 0.5;
+    opacity: 0.3;
   }
 
   .active-workspace-button {
-    background: burlywood;
+    background: mediumseagreen;
     opacity: 1;
   }
 
 /* center modules */
+/* music */
 .music-eventbox {
+  /*
   border-style: solid;
   border-color: green;
   border-width: 1px;
+  */
 }
 
-.music-box {
-  font-family: "Noto Sans Mono";
-  font-size: 18px;
+  .music-box {
+    font-family: "Noto Sans Mono";
+    font-size: 18px;
 
-  border-style: solid;
-  border-color: red;
-  border-width: 1px;
-}
+    /*
+    border-style: solid;
+    border-color: red;
+    border-width: 1px;
+    */
+  }
 
 /* right modules */
+/* battery */
 .battery-eventbox {
-  background-color: $battery-full;
   border-radius: 20px;
   margin-top: -10px;
   margin-bottom: -10px;
@@ -58,19 +63,19 @@
     font-size: 20px;
   }
 
+/* date time*/
 .datetime-button {
-  /* border: 0 */ /* removes border */
   border-radius: 20px;
 }
 
-.datetime-box {
-  border-radius: 20px;
-  margin-right: 5px;
-}
+  .datetime-box {
+    border-radius: 20px;
+    margin-right: 10px;
+  }
 
-.datetime-label {
-  font-family: "Noto Sans Mono";
-  font-size: 20px;
-  margin-bottom: -20px;
-  margin-top: -20px;
-}
+  .datetime-label {
+    font-family: "Noto Sans Mono";
+    font-size: 16px;
+    margin-bottom: -20px;
+    margin-top: -20px;
+  }
