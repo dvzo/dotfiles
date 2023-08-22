@@ -5,7 +5,10 @@
 ;; polls
 (defpoll datetime :interval "1s" "scripts/datetime_info")
 (defpoll volume :interval "1s" "scripts/getvol")
-(defpoll battery-image-path :initial "images/battery-100.png" :interval "2s" "eww state | grep 'EWW_BATTERY' | python scripts/get_battery_image_path.py")
+(defpoll battery-object 
+  :initial `{"capacity": 100, "status": "Not Charging", "imagepath": "images/battery-full-solid-dark.png"}`
+  :interval "2s" `eww state | grep 'EWW_BATTERY' | python scripts/get_battery_object.py`
+)
 
 ;; listen
 (deflisten music 
@@ -41,7 +44,7 @@
         :onclick "hyprctl dispatch workspace 1"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>1" ? "images/terminal-solid-dark.png" : "images/terminal-solid-light.png"}
+          :path "images/terminal-solid-light.png"
           :image-width 16
           :image-height 16
         )
@@ -54,7 +57,7 @@
         :onclick "hyprctl dispatch workspace 2"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>2" ? "images/firefox-browser-dark.png" : "images/firefox-browser-light.png"}
+          :path "images/firefox-browser-light.png"
           :image-width 16
           :image-height 16
         )
@@ -67,7 +70,7 @@
         :onclick "hyprctl dispatch workspace 3"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>3" ? "images/discord-dark.png" : "images/discord-light.png"}
+          :path "images/discord-light.png"
           :image-width 16
           :image-height 16
         )
@@ -80,7 +83,7 @@
         :onclick "hyprctl dispatch workspace 4"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>4" ? "images/spotify-dark.png" : "images/spotify-light.png"}
+          :path "images/spotify-light.png"
           :image-width 16
           :image-height 16
         )
@@ -93,7 +96,7 @@
         :onclick "hyprctl dispatch workspace 5"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>5" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :path {active-workspace == "workspace>>5" ? "images/circle-solid-light.png" : "images/circle-regular-light.png"}
           :image-width 16
           :image-height 16
         )
@@ -106,7 +109,7 @@
         :onclick "hyprctl dispatch workspace 6"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>6" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :path {active-workspace == "workspace>>6" ? "images/circle-solid-light.png" : "images/circle-regular-light.png"}
           :image-width 16
           :image-height 16
         )
@@ -119,7 +122,7 @@
         :onclick "hyprctl dispatch workspace 7"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>7" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :path {active-workspace == "workspace>>7" ? "images/circle-solid-light.png" : "images/circle-regular-light.png"}
           :image-width 16
           :image-height 16
         )
@@ -132,7 +135,7 @@
         :onclick "hyprctl dispatch workspace 8"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>8" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :path {active-workspace == "workspace>>8" ? "images/circle-solid-light.png" : "images/circle-regular-light.png"}
           :image-width 16
           :image-height 16
         )
@@ -145,7 +148,7 @@
         :onclick "hyprctl dispatch workspace 9"
         :width 40 
         (image
-          :path {active-workspace == "workspace>>9" ? "images/circle-solid-dark.png" : "images/circle-regular-light.png"}
+          :path {active-workspace == "workspace>>9" ? "images/circle-solid-light.png" : "images/circle-regular-light.png"}
           :image-width 16
           :image-height 16
         )
@@ -198,7 +201,7 @@
     (box
       :width 40;; change width of widget
       (image :class "battery-percentage-image"
-        :path "${battery-image-path}"
+        :path {battery-object.imagepath}
         :halign "center"
         :image-width 26
         :image-height 26
