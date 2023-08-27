@@ -206,7 +206,7 @@
 
 (defwidget volume []
   (eventbox
-    :tooltip "${volume-percent}% remaining"
+    :tooltip { volume-muted == "yes" ? "muted" : "${volume-percent}% volume" }
     (box
       :width 40
       (image
