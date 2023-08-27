@@ -13,6 +13,7 @@ cp ~/.toggle-xdg-portals.sh ~/src/dotfiles/
 # cp -r ~/.config/i3/ ~/src/dotfiles/
 
 echo "updating hyprland files..."
+# delete current and copy hyprland files to git repo "dotfiles"
 cp -r ~/.config/hypr/ ~/src/dotfiles/
 
 echo "updating waybar files..."
