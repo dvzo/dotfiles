@@ -21,6 +21,16 @@
   "scripts/get_active_workspace_class"
 )
 
+(deflisten volume-percent
+  :initial "10"
+  "scripts/get_volume"
+)
+
+(deflisten volume-muted
+  :initial "no"
+  "scripts/get_volume_muted"
+)
+
 (defwidget bar[]
   (box :class "bar-box"
     :hexpand false 
@@ -36,7 +46,6 @@
     :space-evenly true
     :halign "start"
     :spacing 5
-
     (eventbox
       :cursor "pointer"
       ;; (button :class "workspace-button active-workspace-button"
@@ -178,6 +187,7 @@
       :space-evenly false
       :halign "end" ;; place widgets at the end of this box
       (temp)
+      (volume)
       (battery)
       (datetime)
     )
@@ -189,6 +199,26 @@
     (box
       (label
         :text "${EWW_DISK["/"].used_perc}"
+      )
+    )
+  )
+)
+
+(defwidget volume []
+  (eventbox
+    :tooltip "${volume-percent}% remaining"
+    (box
+      :width 40
+      (image
+        :path { volume-muted == "yes" ? "images/volume-xmark-solid-light-red.png"
+          : volume-percent == 0 ? "images/volume-xmark-solid-light.png" 
+          : volume-percent >= 1 && volume-percent < 25 ? "images/volume-off-solid-light.png" 
+          : volume-percent >= 25 && volume-percent < 50 ? "images/volume-low-solid-light.png" 
+          : "images/volume-high-solid-light.png"
+        }
+        :halign "center"
+        :image-width 20
+        :image-height 20
       )
     )
   )
