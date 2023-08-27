@@ -1,0 +1,17 @@
+#!/bin/sh
+
+volumeinfo=""
+IFS=" "
+
+handle() {
+  if [[ $1 == *"Event 'change' on sink"* ]]
+  then
+    volumeinfo=$(pulseaudio-ctl full-status);
+
+    read -a volumestatus <<< "$volumeinfo"
+
+    echo ${volumestatus[0]}
+  fi
+}
+
+pactl subscribe | while read -r line; do handle "$line"; done

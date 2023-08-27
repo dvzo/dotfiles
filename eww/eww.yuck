@@ -44,7 +44,7 @@
         :onclick "hyprctl dispatch workspace 1"
         :width 40 
         (image
-          :path "images/terminal-solid-light.png"
+          :path "images/firefox-browser-light.png"
           :image-width 16
           :image-height 16
         )
@@ -57,7 +57,7 @@
         :onclick "hyprctl dispatch workspace 2"
         :width 40 
         (image
-          :path "images/firefox-browser-light.png"
+          :path "images/terminal-solid-light.png"
           :image-width 16
           :image-height 16
         )
